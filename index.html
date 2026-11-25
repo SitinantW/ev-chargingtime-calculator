@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>โปรแกรมจำลองคำนวณเวลาชาร์จ EV (Cleanline)</title>
+    <link href="https://googleapis.com" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="container">
+            <p class="subtitle">Cleanline EV Charger Sales Masterclass</p>
+            <h1>โปรแกรมจำลองคำนวณเวลาชาร์จจริง (AC Wallbox vs DC Fast Charge)</h1>
+            <p class="tagline">🏠 AC Wallbox: ชาร์จข้ามคืนที่บ้าน &nbsp;|&nbsp; ⚡ DC Station: ชาร์จไวระหว่างเดินทาง</p>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        <!-- สูตรจำง่าย 3 ขั้นตอน -->
+        <section class="card formula-card">
+            <h2>📌 สูตรจำง่าย 3 ขั้นตอนสำหรับเซลส์มือใหม่</h2>
+            <ul class="formula-list">
+                <li><strong>1. ยึดตัวเลข "ที่ต่ำกว่า" เสมอ:</strong> เปรียบเทียบกำลังไฟ <em>ตู้ชาร์จ</em> กับ <em>สเปกรถ (OBC / DC Max)</em> ตัวไหนน้อยกว่า ให้ใช้ตัวนั้นคำนวณ!</li>
+                <li><strong>2. สูตรคำนวณ:</strong> [ ความจุแบต (kWh) × % ที่ต้องการชาร์จ ] ÷ กำลังไฟชาร์จจริง (kW)</li>
+                <li><strong>3. บวกเผื่อหน้างาน:</strong> ชาร์จบ้าน <strong>AC บวกเพิ่ม ~10%</strong> (Loss ความร้อน) | ชาร์จตู้ <strong>DC บวกเพิ่ม ~15%</strong> (กราฟไฟตกช่วงท้าย)</li>
+            </ul>
+        </section>
+
+        <!-- ส่วนคำนวณ -->
+        <section class="card">
+            <h2>🧮 ทดลองกดคำนวณเวลาชาร์จจริง</h2>
+            
+            <div class="preset-group">
+                <button type="button" class="btn-preset" onclick="setPreset(7.4, 7.4, 80, 60, 80)">ตัวอย่าง 1: รถบ้าน 7.4kW</button>
+                <button type="button" class="btn-preset" onclick="setPreset(22, 11, 100, 60, 80)">ตัวอย่าง 2: ตู้ 22kW แต่รถรับ AC 11kW</button>
+                <button type="button" class="btn-preset" onclick="setPreset(120, 11, 150, 80, 60)">ตัวอย่าง 3: รถแบตใหญ่ ชาร์จไว</button>
+            </div>
+
+            <div class="input-grid">
+                <!-- ส่วนที่ 1 -->
+                <div class="input-box">
+                    <h3>ส่วนที่ 1 ข้อมูลเครื่องชาร์จ (Charger)</h3>
+                    <div class="form-group">
+                        <label for="chargerKw">กำลังไฟเครื่องชาร์จ (kW)</label>
+                        <input type="number" id="chargerKw" value="7.4" step="0.1" oninput="calculate()">
+                    </div>
+                </div>
+
+                <!-- ส่วนที่ 2 -->
+                <div class="input-box">
+                    <h3>ส่วนที่ 2 ข้อมูลรถยนต์ไฟฟ้า (EV)</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="evAcKw">สเปกรับไฟ AC: OBC (kW)</label>
+                            <input type="number" id="evAcKw" value="7.4" step="0.1" oninput="calculate()">
+                        </div>
+                        <div class="form-group">
+                            <label for="evDcKw">สเปกรับไฟ DC Max (kW)</label>
+                            <input type="number" id="evDcKw" value="80" step="1" oninput="calculate()">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="batteryKwh">ความจุแบตเตอรี่ (kWh)</label>
+                        <input type="number" id="batteryKwh" value="60" step="1" oninput="calculate()">
+                    </div>
+                </div>
+            </div>
+
+            <!-- สไลเดอร์เปอร์เซ็นต์ -->
+            <div class="slider-box">
+                <div class="slider-header">
+                    <label for="chargePercent">% ที่ต้องการชาร์จเพิ่ม</label>
+                    <span id="percentDisplay" class="percent-badge">80%</span>
+                </div>
+                <input type="range" id="chargePercent" min="5" max="100" value="80" oninput="calculate()">
+                <p class="energy-text">พลังงานไฟฟ้าที่ต้องเติมเข้าแบตเตอรี่: <strong id="energyNeeded">48.0 kWh</strong></p>
+            </div>
+        </section>
+
+        <!-- ผลลัพธ์ -->
+        <section class="result-grid">
+            <div class="card result-card ac-border">
+                <div class="result-header">
+                    <h3 class="text-ac">🏠 กรณีชาร์จแบบ AC</h3>
+                    <span class="badge badge-ac">Wallbox ที่บ้าน</span>
+                </div>
+                <div id="acRealTime" class="time-display">~7 ชม. 8 นาที</div>
+                <div class="result-details">
+                    <p>กำลังไฟชาร์จจริง: <strong id="acRealKw">7.4 kW</strong></p>
+                    <p>เวลาทฤษฎี: <span id="acTheoTime">6 ชม. 29 นาที</span> (+เผื่อ Loss 10%)</p>
+                </div>
+            </div>
+
+            <div class="card result-card dc-border">
+                <div class="result-header">
+                    <h3 class="text-dc">⚡ กรณีชาร์จแบบ DC</h3>
+                    <span class="badge badge-dc">สถานีชาร์จเร็ว</span>
+                </div>
+                <div id="dcRealTime" class="time-display">~7 ชม. 28 นาที</div>
+                <div class="result-details">
+                    <p>กำลังไฟชาร์จจริง: <strong id="dcRealKw">7.4 kW</strong></p>
+                    <p>เวลาทฤษฎี: <span id="dcTheoTime">6 ชม. 29 นาที</span> (+เผื่อกราฟตก 15%)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ทริคตอบลูกค้า -->
+        <section class="tip-box">
+            <span class="tip-icon">💡</span>
+            <div class="tip-text">
+                <strong>ทริคตอบลูกค้าหน้างาน:</strong> ให้ตอบเป็นช่วงเวลาประมาณ <strong id="tipTime" class="underline">7 ชม. 8 นาที</strong> (สำหรับไฟบ้าน AC) แนะนำเสียบชาร์จช่วงดึก ตื่นเช้ามาแบตเต็มพร้อมเดินทางครับ
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
