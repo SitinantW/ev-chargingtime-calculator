@@ -6,8 +6,8 @@
 
 body {
     font-family: 'Prompt', sans-serif;
-    background-color: #f3f4f6;
-    color: #1f2937;
+    background-color: #f1f5f9; /* เทาอ่อนสบายตา */
+    color: #1e293b; /* เทาเข้มสำหรับตัวอักษร */
     line-height: 1.6;
     padding-bottom: 40px;
 }
@@ -18,9 +18,9 @@ body {
     padding: 0 16px;
 }
 
-/* Header */
+/* Header โทนสีเขียว Cleanline */
 .header {
-    background: linear-gradient(135deg, #1e3a8a, #1d4ed8);
+    background: linear-gradient(135deg, #065f46, #10b981);
     color: #ffffff;
     padding: 24px 0;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
@@ -30,8 +30,9 @@ body {
     font-size: 12px;
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: #bfdbfe;
+    color: #a7f3d0;
     margin-bottom: 4px;
+    font-weight: 600;
 }
 
 .header h1 {
@@ -42,11 +43,11 @@ body {
 
 .tagline {
     font-size: 13px;
-    color: #dbeafe;
+    color: #ecfdf5;
     margin-top: 8px;
 }
 
-/* Cards */
+/* Cards สีขาวสะอาดตา */
 .main-content {
     margin-top: 24px;
     display: flex;
@@ -58,17 +59,18 @@ body {
     background: #ffffff;
     border-radius: 12px;
     padding: 20px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e2e8f0;
 }
 
 .card h2 {
     font-size: 18px;
-    color: #1e3a8a;
+    color: #065f46; /* เขียวเข้ม */
     margin-bottom: 12px;
 }
 
 .formula-card {
-    border-left: 5px solid #2563eb;
+    border-left: 5px solid #10b981; /* เขียวหลัก */
 }
 
 .formula-list {
@@ -77,9 +79,10 @@ body {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    color: #334155;
 }
 
-/* Preset Buttons */
+/* Preset Buttons โทนเขียวอ่อน-ขาว */
 .preset-group {
     display: flex;
     flex-wrap: wrap;
@@ -88,23 +91,25 @@ body {
 }
 
 .btn-preset {
-    background-color: #eff6ff;
-    color: #1d4ed8;
-    border: 1px solid #bfdbfe;
+    background-color: #ecfdf5;
+    color: #047857;
+    border: 1px solid #a7f3d0;
     padding: 8px 12px;
     border-radius: 8px;
     font-family: 'Prompt', sans-serif;
     font-size: 12px;
     font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: all 0.2s;
 }
 
 .btn-preset:hover, .btn-preset:active {
-    background-color: #dbeafe;
+    background-color: #10b981;
+    color: #ffffff;
+    border-color: #10b981;
 }
 
-/* Form Inputs */
+/* Form Inputs โทนเทาอ่อน-ขาว */
 .input-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -121,15 +126,15 @@ body {
 }
 
 .input-box {
-    background-color: #f9fafb;
+    background-color: #f8fafc;
     padding: 16px;
     border-radius: 8px;
-    border: 1px solid #e5e7eb;
+    border: 1px solid #e2e8f0;
 }
 
 .input-box h3 {
     font-size: 14px;
-    color: #1e40af;
+    color: #065f46;
     margin-bottom: 12px;
 }
 
@@ -150,33 +155,36 @@ body {
 .form-group label {
     display: block;
     font-size: 12px;
-    color: #4b5563;
+    color: #475569;
     margin-bottom: 4px;
 }
 
 .form-group input[type="number"] {
     width: 100%;
     padding: 10px;
-    border: 1px solid #d1d5db;
+    background-color: #ffffff;
+    border: 1px solid #cbd5e1;
     border-radius: 8px;
     font-family: 'Prompt', sans-serif;
     font-size: 16px;
     font-weight: 600;
-    color: #111827;
+    color: #0f172a;
+    transition: border-color 0.2s;
 }
 
 .form-group input[type="number"]:focus {
     outline: none;
-    border-color: #2563eb;
+    border-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
 }
 
-/* Slider */
+/* Slider โทนเขียวพาสเทล */
 .slider-box {
     margin-top: 20px;
-    background-color: #eff6ff;
+    background-color: #ecfdf5;
     padding: 16px;
     border-radius: 8px;
-    border: 1px solid #dbeafe;
+    border: 1px solid #a7f3d0;
 }
 
 .slider-header {
@@ -189,33 +197,34 @@ body {
 .slider-header label {
     font-size: 14px;
     font-weight: 500;
+    color: #064e3b;
 }
 
 .percent-badge {
     font-size: 18px;
     font-weight: 700;
-    color: #1d4ed8;
+    color: #059669;
 }
 
 input[type="range"] {
     width: 100%;
-    accent-color: #2563eb;
+    accent-color: #10b981;
     cursor: pointer;
 }
 
 .energy-text {
     font-size: 13px;
-    color: #4b5563;
+    color: #475569;
     text-align: right;
     margin-top: 8px;
 }
 
 .energy-text strong {
-    color: #1e3a8a;
+    color: #065f46;
     font-size: 15px;
 }
 
-/* Results */
+/* Results แยกความต่างระหว่าง AC (เขียว) และ DC (เทาเข้ม/เงิน) */
 .result-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -228,8 +237,8 @@ input[type="range"] {
     }
 }
 
-.ac-border { border-top: 4px solid #10b981; }
-.dc-border { border-top: 4px solid #f59e0b; }
+.ac-border { border-top: 4px solid #10b981; } /* AC สีเขียวหลัก */
+.dc-border { border-top: 4px solid #475569; } /* DC สีเทาเข้ม */
 
 .result-header {
     display: flex;
@@ -239,7 +248,7 @@ input[type="range"] {
 }
 
 .text-ac { color: #065f46; font-size: 16px; }
-.text-dc { color: #92400e; font-size: 16px; }
+.text-dc { color: #334155; font-size: 16px; }
 
 .badge {
     font-size: 11px;
@@ -249,27 +258,32 @@ input[type="range"] {
 }
 
 .badge-ac { background-color: #d1fae5; color: #065f46; }
-.badge-dc { background-color: #fef3c7; color: #92400e; }
+.badge-dc { background-color: #e2e8f0; color: #334155; }
 
 .time-display {
     font-size: 28px;
     font-weight: 700;
-    color: #111827;
+    color: #0f172a;
     margin: 8px 0;
 }
 
 .result-details {
     font-size: 13px;
-    color: #4b5563;
-    border-top: 1px solid #e5e7eb;
+    color: #64748b;
+    border-top: 1px solid #e2e8f0;
     padding-top: 10px;
     margin-top: 10px;
 }
 
-/* Tip Box */
+.result-details strong {
+    color: #1e293b;
+}
+
+/* Tip Box โทนเทาอ่อนตัดขอบเขียว */
 .tip-box {
-    background-color: #fffbeb;
-    border: 1px solid #fde68a;
+    background-color: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-left: 4px solid #10b981;
     border-radius: 12px;
     padding: 16px;
     display: flex;
@@ -283,9 +297,14 @@ input[type="range"] {
 
 .tip-text {
     font-size: 14px;
-    color: #78350f;
+    color: #334155;
+}
+
+.tip-text strong {
+    color: #065f46;
 }
 
 .underline {
     text-decoration: underline;
 }
+
